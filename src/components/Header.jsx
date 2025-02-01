@@ -8,7 +8,7 @@ export default function Header() {
             <h1>Food Order</h1>
         </div>
         <nav>
-            <Button textOnly>Cart (0)</Button>
+            <Button textOnly>Cart (2)</Button>
         </nav>
     </header>
 }
