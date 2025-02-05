@@ -19,7 +19,7 @@ export default function Cart() {
     return <Modal className="cart" open={userProgressCtx.progress === "cart"}>
         <h2>Your Cart</h2>
         <ul>
-            {cartCtx.items.map((item) =>(
+            {cartCtx.items.map((item) => (
                 <li key={item.id}>{item.name} - {item.quantity}</li>
             ))}
         </ul>

@@ -3,7 +3,7 @@ import { currencyFormatter } from "../utils/formatting.js"
 import Button from "./UI/Button.jsx"
 import CartContext from "./store/CartContext.jsx"
 
-export default function MealCard({meal}) {
+export default function MealCard({ meal }) {
     const cartCtx = useContext(CartContext);
 
     function handleAddMealToCart() {

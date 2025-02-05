@@ -8,11 +8,11 @@ export default function Meals() {
         async function fetchMeals() {
 
             const res = await fetch("http://localhost:3000/meals");
-    
+
             if (!res.ok) {
-    
+
             }
-    
+
             const meals = await res.json();
             setLoadedMeals(meals);
         }
@@ -23,6 +23,6 @@ export default function Meals() {
     return <ul id="meals">
         {loadedMeals.map((meal) => (
             <MealCard key={meal.id} meal={meal} />
-))}
+        ))}
     </ul>
 }
