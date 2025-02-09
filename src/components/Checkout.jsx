@@ -21,14 +21,14 @@ export default function Checkout() {
         const fd = new FormData(e.target);
         const customerData = Object.fromEntries(fd.entries());
 
-        fetch('http://localhost:300/orders', {
+        fetch('http://localhost:3000/orders', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 order: {
-                    items,
+                    items: cartCtx.items,
                     customer: customerData
                 }
             })
