@@ -20,6 +20,19 @@ export default function Checkout() {
 
         const fd = new FormData(e.target);
         const customerData = Object.fromEntries(fd.entries());
+
+        fetch('http://localhost:300/orders', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                order: {
+                    items,
+                    customer: customerData
+                }
+            })
+        });
     }
 
     return <Modal open={userProgressCtx.progress === "checkout"} onClose={handleClose}>
@@ -27,7 +40,7 @@ export default function Checkout() {
             <h2>Checkout</h2>
             <p>Total Amount: {currencyFormatter.format(cartTotal)}</p>
 
-            <Input label="Full Name" type="text" id="full-name" />
+            <Input label="Full Name" type="text" id="name" />
             <Input label="E-mail Adress" type="email" id="email" />
             <Input label="Street" type="text" id="street" />
             <div className="control-row">
