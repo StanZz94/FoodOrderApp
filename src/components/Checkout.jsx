@@ -5,11 +5,21 @@ import { currencyFormatter } from "../utils/formatting";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
 import UserProgressContext from "./store/UserProgressContext";
+import useHttp from "./hooks/useHttp";
+
+const requestConfig = {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    }
+};
 
 export default function Checkout() {
     const userProgressCtx = useContext(UserProgressContext);
     const cartCtx = useContext(CartContext);
     const cartTotal = cartCtx.items.reduce((totalPrice, item) => totalPrice + item.quantity * item.price, 0);
+
+    const { data, error, isLoading, sendRequest } = useHttp('http://localhost:3000/orders', requestConfig);
 
     function handleClose() {
         userProgressCtx.hideCheckout();
@@ -21,18 +31,21 @@ export default function Checkout() {
         const fd = new FormData(e.target);
         const customerData = Object.fromEntries(fd.entries());
 
-        fetch('http://localhost:3000/orders', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                order: {
-                    items: cartCtx.items,
-                    customer: customerData
-                }
-            })
-        });
+        sendRequest(JSON.stringify({
+            order: {
+                items: cartCtx.items,
+                customer: customerData
+            }
+        }));
+    }
+
+    let actions = (<>
+        <Button textOnly type="button" onClick={handleClose}>Close</Button>
+        <Button>Submit Order</Button>
+    </>);
+
+    if (isLoading) {
+        actions = <span>Sending order...</span>
     }
 
     return <Modal open={userProgressCtx.progress === "checkout"} onClose={handleClose}>
@@ -47,10 +60,8 @@ export default function Checkout() {
                 <Input label="Postal Code" type="text" id="postal-code" />
                 <Input label="City" type="text" id="city" />
             </div>
-            <p>
-                <Button textOnly type="button" onClick={handleClose}>Close</Button>
-                <Button>Submit Order</Button>
-            </p>
+            
+            <p>{actions}</p>
         </form>
     </Modal>
 };
