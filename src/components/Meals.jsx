@@ -1,3 +1,4 @@
+import Error from "./Error.jsx";
 import useHttp from "./hooks/useHttp.js";
 import MealCard from "./MealCard";
 
@@ -8,6 +9,10 @@ export default function Meals() {
 
     if (isLoading) {
         return <p className="center">Fething meals...</p>
+    }
+
+    if (error) {
+        return <Error title="Failed to fetch meals!" message={error} />
     }
 
     return <ul id="meals">
