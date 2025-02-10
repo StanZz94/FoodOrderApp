@@ -7,7 +7,7 @@ export default function Meals() {
     const { data: loadedMeals, error, isLoading } = useHttp('http://localhost:3000/meals', requestConfig, []);
 
     if (isLoading) {
-        return <p>Fething meals...</p>
+        return <p className="center">Fething meals...</p>
     }
 
     return <ul id="meals">
