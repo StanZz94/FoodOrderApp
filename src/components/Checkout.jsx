@@ -78,7 +78,7 @@ export default function Checkout() {
                 <Input label="City" type="text" id="city" />
             </div>
             {error && <Error title="Fail to make order!" message={error} />}
-            <p>{actions}</p>
+            <p className="modal-actions">{actions}</p>
         </form>
     </Modal>
 };
